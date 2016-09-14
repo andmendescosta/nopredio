@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -24,10 +27,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.prefs.Preferences;
 
 import br.com.nopredio.model.Condominio;
+import br.com.nopredio.model.Perfil;
 import br.com.nopredio.model.Usuario;
 import br.com.nopredio.util.JSONfunctions;
+import br.com.nopredio.util.Mask;
 import br.com.nopredio.util.PrefUtils;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -44,6 +50,7 @@ public class SignupActivity extends AppCompatActivity {
     Condominio condominioSelected = null;
 
     @InjectView(R.id.btnSignup) Button _signupButton;
+    @InjectView(R.id.txtTelefone) EditText _telefoneText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +60,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         ButterKnife.inject(this);
         //EditText etTelefone = (EditText) findViewById(R.id.txtTelefone);
-        //etTelefone.addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, etTelefone));
+        _telefoneText.addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, _telefoneText));
 
         // Download JSON file AsyncTask
         new DownloadJSON().execute();
@@ -125,6 +132,7 @@ public class SignupActivity extends AppCompatActivity {
         final String _nomeText = ((TextView) findViewById(R.id.txtNome)).getText().toString();
         final String _apartamentoText = ((TextView) findViewById(R.id.txtApartamento)).getText().toString();
         final String _blocoText = ((TextView) findViewById(R.id.txtBloco)).getText().toString();
+        final String _telefoneText = ((TextView) findViewById(R.id.txtTelefone)).getText().toString().replaceAll("\\D+","");
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
 
@@ -144,11 +152,15 @@ public class SignupActivity extends AppCompatActivity {
                 usuario.setNome(_nomeText);
                 usuario.setEmail(_emailText);
                 usuario.setSenha(_passwordText);
+                usuario.setTelefone(_telefoneText);
                 usuario.setCondominio(condominioSelected);
                 usuario.setApartamento(_apartamentoText);
                 usuario.setBloco(_blocoText);
+                usuario.setPerfil(new Perfil(Long.parseLong("4")));
+                usuario.setAtivo("Y");
                 JSONObject jsonobject = JSONfunctions.sendJSONfromURL(usuario, URL_POST_SAVE_USUARIO);
                 JSONObject jsonReturn = (JSONObject) jsonobject.get("usuario");
+
                 /*ObjectMapper mapper = new ObjectMapper();
                 Gson gson = new Gson();
                 usuario = gson.fromJson(jsonUsu.toString(),Usuario.class);

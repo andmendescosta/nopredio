@@ -29,4 +29,10 @@ public class Perfil {
     public String getAtivo() {return ativo;}
     public boolean isAtivo(){return ativo.equals("Y");}
     public void setAtivo(String ativo) {this.ativo = ativo;}
+
+    public Perfil(Long cod){
+        this.cod = cod;
+        this.nome = "Cliente";
+        this.ativo = "Y";
+    }
 }
