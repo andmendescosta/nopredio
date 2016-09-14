@@ -29,6 +29,7 @@ import br.com.nopredio.model.Condominio;
 import br.com.nopredio.model.Usuario;
 import br.com.nopredio.util.JSONfunctions;
 import br.com.nopredio.util.PrefUtils;
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class SignupActivity extends AppCompatActivity {
@@ -50,7 +51,7 @@ public class SignupActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_signup);
-
+        ButterKnife.inject(this);
         //EditText etTelefone = (EditText) findViewById(R.id.txtTelefone);
         //etTelefone.addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, etTelefone));
 
