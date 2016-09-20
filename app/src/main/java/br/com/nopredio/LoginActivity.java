@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 import br.com.nopredio.model.Usuario;
+import br.com.nopredio.util.Configuration;
 import br.com.nopredio.util.JSONfunctions;
 import br.com.nopredio.util.PrefUtils;
 import butterknife.ButterKnife;
@@ -37,7 +38,7 @@ import butterknife.InjectView;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String MAP_API_URL = "http://52.36.27.122:8080/nopredio/usuario/login";
+    private static final String MAP_API_URL = Configuration.URL_APLICTATION+"usuario/login";
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private Usuario usuario;

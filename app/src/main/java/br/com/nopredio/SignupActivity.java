@@ -32,6 +32,7 @@ import java.util.prefs.Preferences;
 import br.com.nopredio.model.Condominio;
 import br.com.nopredio.model.Perfil;
 import br.com.nopredio.model.Usuario;
+import br.com.nopredio.util.Configuration;
 import br.com.nopredio.util.JSONfunctions;
 import br.com.nopredio.util.Mask;
 import br.com.nopredio.util.PrefUtils;
@@ -40,8 +41,8 @@ import butterknife.InjectView;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private static final String URL_GET_LIST_CONDOMINIOS = "http://52.36.27.122:8080/nopredio/condominio/list";
-    private static final String URL_POST_SAVE_USUARIO = "http://52.36.27.122:8080/nopredio/usuario/salvar";
+    private static final String URL_GET_LIST_CONDOMINIOS = Configuration.URL_APLICTATION+"condominio/list";
+    private static final String URL_POST_SAVE_USUARIO = Configuration.URL_APLICTATION+"usuario/salvar";
     JSONObject jsonobject;
     JSONArray jsonarray;
     ProgressDialog mProgressDialog;
@@ -159,7 +160,7 @@ public class SignupActivity extends AppCompatActivity {
                 usuario.setPerfil(new Perfil(Long.parseLong("4")));
                 usuario.setAtivo("Y");
                 JSONObject jsonobject = JSONfunctions.sendJSONfromURL(usuario, URL_POST_SAVE_USUARIO);
-                JSONObject jsonReturn = (JSONObject) jsonobject.get("usuario");
+                JSONObject jsonReturn = (JSONObject) jsonobject.get("retorno");
 
                 /*ObjectMapper mapper = new ObjectMapper();
                 Gson gson = new Gson();
